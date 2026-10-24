@@ -1,0 +1,28 @@
+APP_NAME="Atma Barber"
+APP_ENV=production
+APP_KEY=base64:vn2DDPcq/aBPyDabBYHB/GuAVtdwQdPUqyYSGfyYXyU=
+APP_DEBUG=false
+APP_TIMEZONE=Asia/Jakarta
+APP_URL=https://nama-service-anda.onrender.com
+
+APP_LOCALE=en
+APP_FALLBACK_LOCALE=en
+APP_FAKER_LOCALE=en_US
+
+LOG_CHANNEL=stderr
+LOG_LEVEL=info
+
+# --- KONEKSI DATABASE TIDB CLOUD ---
+DB_CONNECTION=mysql
+DB_HOST=gateway01.ap-southeast-1.prod.aws.tidbcloud.com
+DB_PORT=4000
+DB_DATABASE=atmabarber
+DB_USERNAME=ganti_dengan_username_tidb_anda
+DB_PASSWORD=ganti_dengan_password_tidb_anda
+
+# --- KONEKSI SSL TIDB (WAJIB DI RENDER) ---
+MYSQL_ATTR_SSL_CA=/etc/ssl/certs/ca-certificates.crt
+
+SESSION_DRIVER=file
+QUEUE_CONNECTION=sync
+CACHE_STORE=file

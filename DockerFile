@@ -7,6 +7,9 @@ WORKDIR /var/www/html
 # Salin seluruh source code Laravel
 COPY --chown=www-data:www-data . .
 
+# Berikan izin ke storage dan bootstrap/cache
+RUN chmod -R 775 storage bootstrap/cache
+
 # Install dependency Laravel via Composer
 RUN composer install --no-dev --optimize-autoloader
 
