@@ -13,11 +13,14 @@ class Barber extends Model
 
     protected $fillable = [
         'nama_barber',    
-        'kontak_barber',  
+        'kontak_barber',
+        'deskripsi',
     ];
 
     public function layanan()
     {
-        return $this->hasMany(Layanan::class, 'id_barber');
+        return $this->belongsToMany(Layanan::class, 'barber_layanan', 'id_barber', 'id_layanan')
+            ->withPivot('tarif_khusus')
+            ->withTimestamps();
     }
 }
