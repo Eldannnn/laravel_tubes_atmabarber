@@ -30,6 +30,13 @@ class ReviewController extends Controller
             'komentar' => 'nullable|string',
         ]);
 
+        if (empty($validated['id_pelanggan']) && auth()->check()) {
+            $validated['id_pelanggan'] = auth()->id();
+        }
+        if (empty($validated['nama_pelanggan']) && auth()->check()) {
+            $validated['nama_pelanggan'] = auth()->user()->nama ?? auth()->user()->name ?? 'Pelanggan';
+        }
+
         $review = Review::create($validated);
 
         return response()->json(['success' => true, 'data' => $review], 201);

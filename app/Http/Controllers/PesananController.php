@@ -101,12 +101,26 @@ class PesananController extends Controller
 
     public function transactionHistory()
     {
-        $user = Auth::user(); // Ambil user yang sedang login
+        $user = Auth::user();
 
         $transactions = DB::table('pesanans')
-            ->where('id_pelanggan', $user->id)
-            ->select('tanggal_pesanan as date', 'layanan_ambil as service', 'total_harga as price')
-            ->orderBy('tanggal_pesanan', 'desc')
+            ->leftJoin('barbers', 'pesanans.id_barber', '=', 'barbers.id')
+            ->leftJoin('reviews', 'reviews.id_pesanan', '=', 'pesanans.id')
+            ->where('pesanans.id_pelanggan', $user->id)
+            ->select(
+                'pesanans.id',
+                'pesanans.id as id_pesanan',
+                'pesanans.id_barber',
+                'pesanans.kode_booking',
+                'pesanans.tanggal_pesanan as date',
+                'pesanans.layanan_ambil as service',
+                'pesanans.total_harga as price',
+                'barbers.nama_barber as barber_name',
+                DB::raw('CASE WHEN reviews.id IS NOT NULL THEN 1 ELSE 0 END as is_reviewed'),
+                'reviews.rating as review_rating',
+                'reviews.komentar as review_comment'
+            )
+            ->orderBy('pesanans.tanggal_pesanan', 'desc')
             ->get();
 
         return response()->json(['transactions' => $transactions], 200);
